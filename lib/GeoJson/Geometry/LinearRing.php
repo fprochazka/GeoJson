@@ -16,23 +16,23 @@
  */
 class LinearRing extends LineString
 {
-  protected $geom_type = 'LinearRing';
 
-  /**
-   * Constructor
-   *
-   * @param array $positions The Point array
-   */
-  public function __construct(array $positions)
-  {
-    if (count($positions) > 1)
-    {
-      parent::__construct($positions);
-    }
-    else
-    {
-      throw new Exception("Linestring with less than two points");
-    }
-  }
+	protected $geom_type = 'LinearRing';
+
+
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $positions The Point array
+	 */
+	public function __construct(array $positions)
+	{
+		if (count($positions) > 1) {
+			parent::__construct($positions);
+		} else {
+			throw new Exception("Linestring with less than two points");
+		}
+	}
 }
 

@@ -14,19 +14,22 @@
  * @subpackage Geometry
  * @author     Camptocamp <info@camptocamp.com>
  */
-class MultiPolygon extends Collection 
+class MultiPolygon extends Collection
 {
-  protected $geom_type = 'MultiPolygon';
-  
-  /**
-   * Constructor
-   *
-   * @param array $polygons The Polygon array
-   */
-  public function __construct(array $polygons) 
-  {
-    parent::__construct($polygons);
-  }
-  
+
+	protected $geom_type = 'MultiPolygon';
+
+
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $polygons The Polygon array
+	 */
+	public function __construct(array $polygons)
+	{
+		parent::__construct($polygons);
+	}
+
 }
 

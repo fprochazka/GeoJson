@@ -8,25 +8,27 @@
  */
 
 /**
- * MultiPoint : a MultiPoint geometry.
+ * MultiLineString : a MultiLineString geometry.
  *
  * @package    GeoJSON
  * @subpackage Geometry
  * @author     Camptocamp <info@camptocamp.com>
  */
-class MultiPoint extends Collection 
+class MultiLineString extends Collection
 {
-  protected $geom_type = 'MultiPoint';
-  
-  /**
-   * Constructor
-   *
-   * @param array $points The Point array
-   */
-  public function __construct(array $points) 
-  {
-    parent::__construct($points);
-  }
-  
+
+	protected $geom_type = 'MultiLineString';
+
+
+
+	/**
+	 * Constructor
+	 *
+	 * @param array $linestrings The LineString array
+	 */
+	public function __construct(array $linestrings)
+	{
+		parent::__construct($linestrings);
+	}
 }
 
