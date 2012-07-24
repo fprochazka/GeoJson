@@ -74,7 +74,7 @@ class GeoJSON extends Nette\Object
 	{
 		Validators::assertField($obj, 'type');
 
-		if ($obj['type'] === 'featurecollection') {
+		if ($obj['type'] === 'FeatureCollection') {
 			Validators::assertField($obj, 'features', 'array');
 
 			$features = array();
@@ -84,7 +84,7 @@ class GeoJSON extends Nette\Object
 
 			return new FeatureCollection($features);
 
-		} elseif ($obj['type'] === 'feature') {
+		} elseif ($obj['type'] === 'Feature') {
 			return $this->toFeatureInstance($obj);
 		}
 
@@ -108,12 +108,11 @@ class GeoJSON extends Nette\Object
 			throw new AssertionException("The type expects to be 'Feature', '{$obj['type']}' given.");
 		}
 
-		Validators::assertField($obj, 'id');
 		Validators::assertField($obj, 'geometry');
 		Validators::assertField($obj, 'properties');
 
 		return new Feature(
-			$obj['id'],
+			isset($obj['bbox']) ? $obj['bbox'] : NULL,
 			$this->toGeomInstance($obj['geometry']),
 			(array)$obj['properties'],
 			isset($obj['bbox']) ? (array)$obj['bbox'] : array()
