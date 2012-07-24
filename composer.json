@@ -3,6 +3,12 @@
 	"description": "This library provides object oriented api around GeoJson schema.",
 	"require": {
 		"php" : ">=5.3.2",
-		"nette/nette" : "2.0.3"
-	}
+		"nette/nette" : "2.0.*"
+	},
+    "autoload":{
+        "psr-0":{
+            "Kdyby\\Extension\\GeoJson":"libs/"
+        }
+    },
+    "target-dir":"Kdyby/Extension/GeoJson"
 }
