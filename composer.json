@@ -3,7 +3,7 @@
 	"description": "This library provides object oriented api around GeoJson schema.",
 	"require": {
 		"php" : ">=5.3.2",
-		"nette/nette" : "2.0.*"
+		"nette/nette" : "@dev"
 	},
     "autoload":{
         "psr-0":{
