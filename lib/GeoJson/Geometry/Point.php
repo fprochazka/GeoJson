@@ -1,25 +1,38 @@
 <?php
-/*
- * This file is part of the GeoJSON package.
- * (c) Camptocamp <info@camptocamp.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 /**
- * Point : a Point geometry.
+ * This file is part of the Kdyby (http://www.kdyby.org)
  *
- * @package    GeoJSON
- * @subpackage Geometry
- * @author     Camptocamp <info@camptocamp.com>
+ * Copyright (c) 2008, 2012 Filip Procházka (filip.prochazka@kdyby.org)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
+ */
+
+namespace Kdyby\Extension\GeoJson\Geometry;
+
+use Kdyby\Extension\GeoJson\InvalidArgumentException;
+use Nette;
+
+
+
+/**
+ * A Point geometry.
+ *
+ * @copyright Camptocamp <info@camptocamp.com>
+ * @author Filip Procházka <filip.prochazka@kdyby.org>
  */
 class Point extends Geometry
 {
 
-	private $position = array(2);
+	/**
+	 * @var float
+	 */
+	private $x;
 
-	protected $geom_type = 'Point';
+	/**
+	 * @var float
+	 */
+	private $y;
 
 
 
@@ -28,13 +41,20 @@ class Point extends Geometry
 	 *
 	 * @param float $x The x coordinate (or longitude)
 	 * @param float $y The y coordinate (or latitude)
+	 *
+	 * @throws \Kdyby\Extension\GeoJson\InvalidArgumentException
 	 */
 	public function __construct($x, $y)
 	{
-		if (!is_numeric($x) || !is_numeric($y)) {
-			throw new Exception("Bad coordinates: x and y should be numeric");
+		if (!is_numeric($x)) {
+			throw new InvalidArgumentException("Coordinate X (longitude) should be numeric.");
 		}
-		$this->position = array($x, $y);
+		$this->x = $x;
+
+		if (!is_numeric($y)) {
+			throw new InvalidArgumentException("Coordinate Y (latitude) should be numeric.");
+		}
+		$this->y = $y;
 	}
 
 
@@ -46,7 +66,7 @@ class Point extends Geometry
 	 */
 	public function getCoordinates()
 	{
-		return $this->position;
+		return array($this->x, $this->y);
 	}
 
 
@@ -58,7 +78,7 @@ class Point extends Geometry
 	 */
 	public function getX()
 	{
-		return $this->position[0];
+		return $this->x;
 	}
 
 
@@ -70,7 +90,7 @@ class Point extends Geometry
 	 */
 	public function getY()
 	{
-		return $this->position[1];
+		return $this->y;
 	}
 
 }

@@ -1,26 +1,33 @@
 <?php
-/*
- * This file is part of the GeoJSON package.
- * (c) Camptocamp <info@camptocamp.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 /**
- * Geometry : abstract class which represents a geometry.
+ * This file is part of the Kdyby (http://www.kdyby.org)
  *
- * @package    GeoJSON
- * @subpackage Geometry
- * @author     Camptocamp <info@camptocamp.com>
+ * Copyright (c) 2008, 2012 Filip Procházka (filip.prochazka@kdyby.org)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
  */
-abstract class Geometry
+
+namespace Kdyby\Extension\GeoJson\Geometry;
+
+use Kdyby\Extension\GeoJson\Serializable;
+use Nette;
+use Nette\Utils\Json;
+
+
+
+/**
+ * Abstract class which represents a geometry.
+ *
+ * @copyright Camptocamp <info@camptocamp.com>
+ * @author Filip Procházka <filip.prochazka@kdyby.org>
+ */
+abstract class Geometry extends Nette\Object implements Serializable
 {
 
-	protected $geom_type;
-
-
-
+	/**
+	 * @return mixed
+	 */
 	abstract public function getCoordinates();
 
 
@@ -32,7 +39,11 @@ abstract class Geometry
 	 */
 	public function getGeomType()
 	{
-		return $this->geom_type;
+		$class = get_class($this);
+		if (strrpos($class, '\\') !== FALSE) {
+			return substr($class, strrpos($class, '\\') + 1);
+		}
+		return $class;
 	}
 
 
@@ -53,6 +64,18 @@ abstract class Geometry
 
 
 	/**
+	 * Dumps Geometry as GeoJSON
+	 *
+	 * @return string The GeoJSON representation of the geometry
+	 */
+	public function toGeoJSON()
+	{
+		return Json::encode($this->getGeoInterface());
+	}
+
+
+
+	/**
 	 * Shortcut to dump geometry as GeoJSON
 	 *
 	 * @return string The GeoJSON representation of the geometry
@@ -62,16 +85,5 @@ abstract class Geometry
 		return $this->toGeoJSON();
 	}
 
-
-
-	/**
-	 * Dumps Geometry as GeoJSON
-	 *
-	 * @return string The GeoJSON representation of the geometry
-	 */
-	public function toGeoJSON()
-	{
-		return json_encode($this->getGeoInterface());
-	}
 }
 

@@ -1,37 +1,27 @@
 <?php
-/*
- * This file is part of the GeoJSON package.
- * (c) Camptocamp <info@camptocamp.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 /**
- * GeometryCollection : a GeometryCollection geometry.
+ * This file is part of the Kdyby (http://www.kdyby.org)
  *
- * @package    GeoJSON
- * @subpackage Geometry
- * @author     Camptocamp <info@camptocamp.com>
+ * Copyright (c) 2008, 2012 Filip Procházka (filip.prochazka@kdyby.org)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
+ */
+
+namespace Kdyby\Extension\GeoJson\Geometry;
+
+use Nette;
+
+
+
+/**
+ * A GeometryCollection geometry.
+ *
+ * @copyright Camptocamp <info@camptocamp.com>
+ * @author Filip Procházka <filip.prochazka@kdyby.org>
  */
 class GeometryCollection extends Collection
 {
-
-	protected $geom_type = 'GeometryCollection';
-
-
-
-	/**
-	 * Constructor
-	 *
-	 * @param array $geometries The Geometries array
-	 */
-	public function __construct(array $geometries = null)
-	{
-		parent::__construct($geometries);
-	}
-
-
 
 	/**
 	 * Returns an array suitable for serialization
@@ -42,14 +32,13 @@ class GeometryCollection extends Collection
 	 */
 	public function getGeoInterface()
 	{
-		$geometries = array();
-		foreach ($this->components as $geometry) {
-			$geometries[] = $geometry->getGeoInterface();
-		}
 		return array(
 			'type' => $this->getGeomType(),
-			'geometries' => $geometries
+			'geometries' => array_map(function (Geometry $geometry) {
+				return $geometry->getGeoInterface();
+			}, $this->getComponents())
 		);
 	}
+
 }
 

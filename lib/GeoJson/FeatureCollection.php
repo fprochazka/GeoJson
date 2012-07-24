@@ -1,36 +1,45 @@
 <?php
 
-/*
- * This file is part of the GeoJSON package.
- * (c) Camptocamp <info@camptocamp.com>
+/**
+ * This file is part of the Kdyby (http://www.kdyby.org)
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Copyright (c) 2008, 2012 Filip Procházka (filip.prochazka@kdyby.org)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
  */
+
+namespace Kdyby\Extension\GeoJson;
+
+use Nette;
+use Nette\Utils\Json;
+
+
 
 /**
- * FeatureCollection class : represents a collection of features.
+ * Represents a collection of features.
  *
- * @package    GeoJSON
- * @subpackage Geometry
- * @author     Camptocamp <info@camptocamp.com>
+ * @copyright Camptocamp <info@camptocamp.com>
+ * @author Filip Procházka <filip.prochazka@kdyby.org>
  */
 
-class FeatureCollection implements IteratorAggregate
+class FeatureCollection extends Nette\Object implements Serializable, \IteratorAggregate
 {
 
-	private $features = null;
+	/**
+	 * @var array|Feature[]
+	 */
+	private $features = array();
 
 
 
 	/**
-	 * Constructor
-	 *
 	 * @param array $features The features used to build the collection
 	 */
-	public function __construct(array $features = null)
+	public function __construct(array $features = array())
 	{
-		$this->features = $features;
+		foreach ($features as $feature) {
+			$this->addFeature($feature);
+		}
 	}
 
 
@@ -54,10 +63,8 @@ class FeatureCollection implements IteratorAggregate
 	{
 		$features = array();
 
-		if (is_array($this->features)) {
-			foreach ($this->features as $feature) {
-				$features[] = $feature->getGeoInterface();
-			}
+		foreach ($this->features as $feature) {
+			$features[] = $feature->getGeoInterface();
 		}
 
 		return array(
@@ -87,7 +94,7 @@ class FeatureCollection implements IteratorAggregate
 	 */
 	public function toGeoJSON()
 	{
-		return json_encode($this->getGeoInterface());
+		return Json::encode($this->getGeoInterface());
 	}
 
 

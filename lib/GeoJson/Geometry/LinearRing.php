@@ -1,38 +1,42 @@
 <?php
-/*
- * This file is part of the GeoJSON package.
- * (c) Camptocamp <info@camptocamp.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 /**
- * LineString : a LineString geometry.
+ * This file is part of the Kdyby (http://www.kdyby.org)
  *
- * @package    GeoJSON
- * @subpackage Geometry
- * @author     Camptocamp <info@camptocamp.com>
+ * Copyright (c) 2008, 2012 Filip Procházka (filip.prochazka@kdyby.org)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
+ */
+
+namespace Kdyby\Extension\GeoJson\Geometry;
+
+use Kdyby\Extension\GeoJson\InvalidArgumentException;
+use Nette;
+
+
+
+/**
+ * A LineString geometry.
+ *
+ * @copyright Camptocamp <info@camptocamp.com>
+ * @author Filip Procházka <filip.prochazka@kdyby.org>
  */
 class LinearRing extends LineString
 {
 
-	protected $geom_type = 'LinearRing';
-
-
-
 	/**
-	 * Constructor
-	 *
 	 * @param array $positions The Point array
+	 *
+	 * @throws \Kdyby\Extension\GeoJson\InvalidArgumentException
 	 */
 	public function __construct(array $positions)
 	{
-		if (count($positions) > 1) {
-			parent::__construct($positions);
-		} else {
-			throw new Exception("Linestring with less than two points");
+		if (count($positions) <= 1) {
+			throw new InvalidArgumentException('LineString have to have at least two points.');
 		}
+
+		parent::__construct($positions);
 	}
+
 }
 

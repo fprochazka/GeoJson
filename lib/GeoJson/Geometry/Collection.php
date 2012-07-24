@@ -1,32 +1,39 @@
 <?php
-/*
- * This file is part of the GeoJSON package.
- * (c) Camptocamp <info@camptocamp.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
 
 /**
- * Collection : abstract class which represents a collection of components.
+ * This file is part of the Kdyby (http://www.kdyby.org)
  *
- * @package    GeoJSON
- * @subpackage Geometry
- * @author     Camptocamp <info@camptocamp.com>
+ * Copyright (c) 2008, 2012 Filip Procházka (filip.prochazka@kdyby.org)
+ *
+ * For the full copyright and license information, please view the file license.txt that was distributed with this source code.
  */
-abstract class Collection extends Geometry implements Iterator
+
+namespace Kdyby\Extension\GeoJson\Geometry;
+
+use Nette;
+
+
+
+/**
+ * Abstract class which represents a collection of components.
+ *
+ * @copyright Camptocamp <info@camptocamp.com>
+ * @author Filip Procházka <filip.prochazka@kdyby.org>
+ */
+abstract class Collection extends Geometry implements \IteratorAggregate
 {
 
-	protected $components = array();
+	/**
+	 * @var array|Geometry[]
+	 */
+	private $components = array();
 
 
 
 	/**
-	 * Constructor
-	 *
 	 * @param array $components The components array
 	 */
-	public function __construct(array $components)
+	public function __construct(array $components = array())
 	{
 		foreach ($components as $component) {
 			$this->add($component);
@@ -35,7 +42,10 @@ abstract class Collection extends Geometry implements Iterator
 
 
 
-	private function add($component)
+	/**
+	 * @param Geometry $component
+	 */
+	protected function add(Geometry $component)
 	{
 		$this->components[] = $component;
 	}
@@ -49,17 +59,15 @@ abstract class Collection extends Geometry implements Iterator
 	 */
 	public function getCoordinates()
 	{
-		$coordinates = array();
-		foreach ($this->components as $component) {
-			$coordinates[] = $component->getCoordinates();
-		}
-		return $coordinates;
+		return array_map(function (Geometry $component) {
+			return $component->getCoordinates();
+		}, $this->components);
 	}
 
 
 
 	/**
-	 * Returns Colection components
+	 * Returns Collection components
 	 *
 	 * @return array
 	 */
@@ -71,11 +79,11 @@ abstract class Collection extends Geometry implements Iterator
 
 
 	/**
-	 * @return ArrayIterator|Traversable
+	 * @return \ArrayIterator|\Traversable
 	 */
 	public function getIterator()
 	{
-		return new ArrayIterator($this->components);
+		return new \ArrayIterator($this->components);
 	}
 
 }
