@@ -168,7 +168,7 @@ class GeoJSON extends Nette\Object
 				Validators::assertField($obj, 'geometries', 'array');
 				$geometries = array();
 				foreach ($obj['geometries'] as $geometry) {
-					$geometries[] = self::toGeomInstance($geometry, FALSE);
+					$geometries[] = $this->toGeomInstance($geometry, FALSE);
 				}
 				return new Geometry\GeometryCollection($geometries);
 
