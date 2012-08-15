@@ -7,7 +7,7 @@
 	},
     "autoload":{
         "psr-0":{
-            "Kdyby\\Extension\\GeoJson":"lib/GeoJson"
+            "Kdyby\\Extension\\GeoJson":"libs/GeoJson"
         }
     },
     "target-dir":"Kdyby/Extension/GeoJson"
