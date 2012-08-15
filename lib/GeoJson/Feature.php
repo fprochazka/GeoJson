@@ -70,10 +70,13 @@ class Feature extends Nette\Object implements Serializable
 	{
 		$geo = array(
 			'type' => 'Feature',
-			'id' => $this->id,
 			'geometry' => $this->geometry !== NULL ? $this->geometry->getGeoInterface() : NULL,
 			'properties' => $this->properties
 		);
+
+		if ($this->id !== NULL) {
+			$geo['id'] = $this->id;
+		}
 
 		if ($this->bbox !== NULL) {
 			$geo['bbox'] = $this->bbox;
