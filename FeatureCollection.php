@@ -100,11 +100,11 @@ class FeatureCollection extends Nette\Object implements Serializable, \IteratorA
 
 
 	/**
-	 * @return ArrayIterator|Traversable
+	 * @return \ArrayIterator|\Traversable
 	 */
 	public function getIterator()
 	{
-		return new ArrayIterator($this->features);
+		return new \ArrayIterator($this->features);
 	}
 
 }
